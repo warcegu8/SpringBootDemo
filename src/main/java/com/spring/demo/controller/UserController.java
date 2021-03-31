@@ -18,13 +18,13 @@ import java.util.List;
  * @date 2018-09-26
  */
 @RestController
-@RequestMapping("/demo")
+@RequestMapping("/user")
 @EnableAutoConfiguration
 public class UserController {
     @Resource
     private UserMapper userMapper;
 
-    @RequestMapping(value = "/findUserById",method = RequestMethod.POST)
+    @RequestMapping(value = "/queryUsersByCondition",method = RequestMethod.POST)
     ListPageVO queryUsersByCondition(@RequestBody UserDTO userDto) {
         List<UserVO> userList = null;
         if(!StringUtils.isNullOrEmpty(userDto.getId())){
