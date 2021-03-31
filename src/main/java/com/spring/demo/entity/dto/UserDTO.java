@@ -1,5 +1,6 @@
 package com.spring.demo.entity.dto;
 
+import com.spring.demo.utils.PageEntity;
 import lombok.Data;
 
 /**
@@ -8,7 +9,7 @@ import lombok.Data;
  * @date 2018-09-26
  */
 @Data
-public class UserDTO{
+public class UserDTO extends PageEntity{
     /**
      * 数据库主键
      */

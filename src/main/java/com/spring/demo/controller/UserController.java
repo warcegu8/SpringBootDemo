@@ -4,7 +4,9 @@ package com.spring.demo.controller;
 import com.mysql.jdbc.StringUtils;
 import com.spring.demo.entity.dto.UserDTO;
 import com.spring.demo.entity.vo.UserVO;
+import com.spring.demo.enu.ErrorListEnum;
 import com.spring.demo.mapper.UserMapper;
+import com.spring.demo.utils.ListPageVO;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
@@ -23,7 +25,7 @@ public class UserController {
     private UserMapper userMapper;
 
     @RequestMapping(value = "/findUserById",method = RequestMethod.POST)
-    List<UserVO> queryUsersByCondition(@RequestBody UserDTO userDto) {
+    ListPageVO queryUsersByCondition(@RequestBody UserDTO userDto) {
         List<UserVO> userList = null;
         if(!StringUtils.isNullOrEmpty(userDto.getId())){
             userList = userMapper.queryUsersById(userDto.getId());
@@ -31,7 +33,7 @@ public class UserController {
         if(!StringUtils.isNullOrEmpty(userDto.getUserName())){
             userList = userMapper.queryUsersByName(userDto.getUserName());
         }
-        return userList;
+        return new ListPageVO(ErrorListEnum.ERROR_LIST_SUCCESS,userList,userDto.getPageInfo());
     }
 }
 
