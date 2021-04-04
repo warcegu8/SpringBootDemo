@@ -3,6 +3,8 @@ package com.spring.demo.entity.dto;
 import com.spring.demo.utils.PageEntity;
 import lombok.Data;
 
+import javax.persistence.*;
+
 /**
  * 用户数据传输对象
  * @author  milo
