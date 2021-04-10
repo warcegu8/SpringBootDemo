@@ -1,8 +1,9 @@
-package com.spring.demo.mapper;
+package com.spring.demo.dao;
 
 import com.spring.demo.entity.vo.UserVO;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ public interface UserMapper{
      * @param id
      * @return
      */
-    @Select("select id,user_name as userName,province from users where id = #{id}")
+    @Select("select user_id as userId,user_name as userName from users where user_id = #{id}")
     List<UserVO> queryUsersById(@Param("id") String id);
 
     /**

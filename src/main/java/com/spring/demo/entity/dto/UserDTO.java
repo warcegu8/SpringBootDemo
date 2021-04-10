@@ -12,10 +12,15 @@ import javax.persistence.*;
  */
 @Data
 public class UserDTO extends PageEntity{
+
     /**
      * 数据库主键
      */
     private String id;
+    /**
+     * 业务主键
+     */
+    private Integer userId;
     /**
      * 用户昵称
      */
