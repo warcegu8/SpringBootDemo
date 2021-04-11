@@ -1,15 +1,14 @@
 package com.spring.demo.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.spring.demo.entity.vo.UserVO;
-import com.spring.demo.utils.MyMapper;
 import org.apache.ibatis.annotations.CacheNamespace;
-import tk.mybatis.mapper.common.Mapper;
 
 /**
  *
  */
 @CacheNamespace
-public interface GUUserMapper extends MyMapper<UserVO> {
+public interface GUUserMapper extends BaseMapper<UserVO> {
 
 
 }

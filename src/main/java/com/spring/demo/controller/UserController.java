@@ -1,7 +1,6 @@
 package com.spring.demo.controller;
 
 
-import com.mysql.jdbc.StringUtils;
 import com.spring.demo.entity.dto.UserDTO;
 import com.spring.demo.entity.vo.UserVO;
 import com.spring.demo.enu.ErrorListEnum;
@@ -10,13 +9,11 @@ import com.spring.demo.dao.GUUserMapper;
 import com.spring.demo.dao.UserMapper;
 import com.spring.demo.utils.GeneralVO;
 import com.spring.demo.utils.ListPageVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.*;
-import sun.java2d.loops.FillRect;
-import tk.mybatis.mapper.entity.Example;
-
-import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -30,6 +27,9 @@ import java.util.UUID;
 @RequestMapping("/user")
 @EnableAutoConfiguration
 public class UserController {
+
+
+    private static Logger logger = LoggerFactory.getLogger(UserController.class);
     @Autowired
     private GUUserMapper gUUserMapper;
 
@@ -44,18 +44,9 @@ public class UserController {
             UserVO userCondition = new UserVO();
             userCondition.setUserId(userDto.getUserId());
             userCondition.setIsDelete(FlagListEnum.FLG_LIST_NOT_DELETE.getKey());
-            userList = gUUserMapper.select(userCondition);
+            userList = gUUserMapper.selectList(null);
         }
-        if(!StringUtils.isNullOrEmpty(userDto.getUserName())){
-            UserVO userCondition = new UserVO();
-            userCondition.setUserName(userDto.getUserName());
-            userCondition.setIsDelete(FlagListEnum.FLG_LIST_NOT_DELETE.getKey());
-            Example example = new Example(UserVO.class);
-            Example.Criteria criteria = example.createCriteria();
-            criteria.andLike("userName","%" + userDto.getUserName() + "%").
-            andEqualTo("isDelete",FlagListEnum.FLG_LIST_NOT_DELETE.getKey());
-            userList = gUUserMapper.selectByExample(example);
-        }
+
         return new ListPageVO(ErrorListEnum.ERROR_LIST_SUCCESS,userList,userDto.getPageInfo());
     }
 
@@ -68,7 +59,6 @@ public class UserController {
     public GeneralVO inertUser(@RequestBody UserVO userVO) {
         //生成数据库主键
         if(userVO.getUserId() == null){
-            userVO.setId(UUID.randomUUID().toString().replace("-",""));
             userVO.setCreateOn(new Date());
             userVO.setUpdateOn(new Date());
             userVO.setIsDelete(FlagListEnum.FLG_LIST_NOT_DELETE.getKey());
@@ -76,8 +66,7 @@ public class UserController {
             userVO.setUserId(userId);
             userVO.setUpdateBy("123456");
             userVO.setCreateBy("123456");
-            //insertSelective空属性会使用数据默认值
-            Integer result = gUUserMapper.insertSelective(userVO);
+            Integer result = gUUserMapper.insert(userVO);
             if(result !=null && result == 1){
                 return new GeneralVO(ErrorListEnum.ERROR_LIST_SUCCESS,null);
             }
@@ -87,8 +76,7 @@ public class UserController {
         }else{
             userVO.setUpdateOn(new Date());
             userVO.setUpdateBy("123456");
-            //insertSelective空属性会使用数据默认值
-            Integer result = gUUserMapper.updateByPrimaryKeySelective(userVO);
+            Integer result = gUUserMapper.updateById(userVO);
             if(result != null && result == 1){
                 return new GeneralVO(ErrorListEnum.ERROR_LIST_SUCCESS,null);
             }else{
@@ -107,7 +95,7 @@ public class UserController {
             userVO.setIsDelete(FlagListEnum.FLG_LIST_DELETED.getKey());
             userVO.setUpdateOn(new Date());
             userVO.setUpdateBy("123456");
-            Integer result = gUUserMapper.updateByPrimaryKeySelective(userVO);
+            Integer result = gUUserMapper.updateById(userVO);
             if(result != null && result == 1){
                 return new GeneralVO(ErrorListEnum.ERROR_LIST_SUCCESS,null);
             }
