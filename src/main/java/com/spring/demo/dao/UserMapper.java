@@ -1,30 +1,24 @@
 package com.spring.demo.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.spring.demo.entity.dto.UserDTO;
 import com.spring.demo.entity.vo.UserVO;
+import org.apache.ibatis.annotations.CacheNamespace;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
- * 用户映射类
+ * 用户dao
  * @author  milo
- * @date 2018-09-26
+ * @version  1.0.0
  */
-public interface UserMapper{
-    /**
-     * 根据用户ID查询用户信息
-     * @param id
-     * @return
-     */
-    @Select("select user_id as userId,user_name as userName from users where user_id = #{id}")
-    List<UserVO> queryUsersById(@Param("id") String id);
+@CacheNamespace
+@Repository
+public interface UserMapper extends BaseMapper<UserVO> {
 
-    /**
-     * 根据用户名称查询用户信息
-     * @param userName
-     * @return
-     */
-    @Select("select id,user_name as userName from users where user_name like concat('%',#{userName},'%')")
-    List<UserVO> queryUsersByName(@Param("userName") String userName);
 }

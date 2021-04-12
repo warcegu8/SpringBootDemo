@@ -1,5 +1,6 @@
 package com.spring.demo.utils;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.gson.annotations.Expose;
 import com.spring.demo.enu.ErrorListEnum;
 

@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+
+import java.beans.Transient;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -26,9 +28,8 @@ public class UserVO implements Serializable {
     /**
      * 业务主键
      */
-    @TableField("user_id")
+    @TableField(exist = false)
     private Integer userId;
-
     /**
      * 用户名称
      */

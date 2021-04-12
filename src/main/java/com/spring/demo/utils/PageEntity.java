@@ -1,5 +1,7 @@
 package com.spring.demo.utils;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import java.io.Serializable;
 
 /**
@@ -34,16 +36,11 @@ public class PageEntity implements Serializable {
 
         if (null != current) {
             this.pageInfo.setCurrent(current);
-        } else if (null == this.pageInfo.getCurrent()) {
-            this.pageInfo.setCurrent(Integer.valueOf(1));
         }
 
         if (null != offset) {
-            this.pageInfo.setOffset(offset);
-        } else if (null == this.pageInfo.getOffset()) {
-            this.pageInfo.setOffset(Integer.valueOf(10));
+            this.pageInfo.setSize(offset);
         }
-
     }
 
     public Integer getCurrent() {
